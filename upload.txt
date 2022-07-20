@@ -1,0 +1,21 @@
+if ($request->hasFile('file'))
+            {
+                $files = $request->file('file');
+                $fileInfo = [];
+                $num = 0;
+                foreach($files as $file)
+                {
+
+                    $fileName = time().md5(time()).$num.'.'.$file->getClientOriginalExtension();
+                    $fileInfo[] = [
+                        'fileName'      => $file->getClientOriginalName(),
+                        'pathFile'      => $file->getPathname(),
+                        'type'          => $file->getMimeType(),
+                        'name'          => time().md5(time()).$num.'.'.$file->getClientOriginalExtension(),
+                        'extension'     => $file->getClientOriginalExtension(),
+                        'path'          => '/media/file/crm/uploadFile/'.$fileName,
+                    ];
+                    $file->move(public_path().'/media/file/crm/uploadFile/', $fileName);
+                    $num++;
+                }
+            }
